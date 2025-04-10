@@ -1,7 +1,7 @@
 <template>
     <main>
         <section>
-            <h1>p</h1>
+         
         </section>
     </main>
 </template>

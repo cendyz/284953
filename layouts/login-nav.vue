@@ -1,29 +1,43 @@
 <template>
-	<nav class="p-[2.4rem] bg-primary-blue text-white flex justify-between items-center niceShadow">
+	<nav
+		class="p-[2.4rem] bg-primary-blue text-white flex justify-between items-center niceShadow sm:px-[3rem] md:px-[4rem] lg:hidden">
 		<img :src="logo" alt="logo cards" class="w-[4rem]" />
 		<div class="flex items-center gap-x-[1rem]">
-			<img :src="poland" alt="flag" />
-			<p class="uppercase font-w700">pl</p>
-			<button type="button" aria-label="change language">
+			<img :src="langsData[actualIndex].img" alt="flag" />
+			<p class="uppercase font-w700">{{ langsData[actualIndex].lang }}</p>
+			<button type="button" aria-label="change language" @click="isOpenLang = !isOpenLang">
 				<img :src="arrow" alt="arrow down" class="w-[3.5rem] invert" />
 			</button>
 		</div>
-		<div
-			class="absolute bg-white w-[calc(100%-4.8rem)] left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] p-[2.4rem] rounded-lg text-black">
-			<p class="text-[2rem] mb-[2rem] pb-[1rem] border-b-[2px]">Wybierz język:</p>
-			<div class="grid">
-				<div
-					class="flex items-center justify-between py-[1rem] px-[.5rem] rounded-lg border-b"
-					v-for="(item, index) in langsData"
-					:key="index">
-					<div class="flex items-center gap-x-[1rem]">
-						<img :src="item.img" alt="flag" />
-						<p>{{ item.country }}</p>
+		<Transition>
+			<div
+				v-if="isOpenLang"
+				class="absolute bg-white w-[calc(100%-4.8rem)] left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] p-[2.4rem] rounded-lg text-black z-[100] max-w-[40rem]">
+				<div class="flex items-center justify-between mb-[1rem]">
+					<p class="text-[2rem]">Wybierz język mWallet</p>
+					<button type="button" aria-label="close change language options" @click="isOpenLang = false">
+						<img :src="x" alt="x icon" />
+					</button>
+				</div>
+				<div class="grid">
+					<div
+						tabindex="0"
+						role="button"
+						@click="changeLanguage(index)"
+						class="flex items-center justify-between py-[1.5rem] px-[.5rem] rounded-lg"
+						:class="actualIndex === index ? 'bg-gray-100/35' : ''"
+						v-for="(item, index) in langsData"
+						:key="index">
+						<div class="flex items-center gap-x-[1rem]">
+							<img :src="item.img" alt="flag" />
+							<p>{{ item.country }}</p>
+						</div>
+						<img :src="success" alt="selected language" class="filt w-[2.5rem]" v-if="index === actualIndex" />
 					</div>
-					<img :src="success" alt="selected language" class="filt w-[2.5rem]" />
 				</div>
 			</div>
-		</div>
+		</Transition>
+		<div v-if="isOpenLang" class="absolute top-0 left-0 w-full h-full bg-black/10 z-[50]"></div>
 	</nav>
 </template>
 
@@ -34,24 +48,37 @@ import poland from 'assets/images/poland.svg'
 import japan from 'assets/images/japan.svg'
 import usa from 'assets/images/usa.svg'
 import success from 'assets/images/success.svg'
+import x from 'assets/images/x.svg'
 
 interface Langs {
 	img: string
 	country: string
+	lang: string
+}
+
+const actualIndex = ref<number>(0)
+const isOpenLang = ref<boolean>(false)
+
+const changeLanguage = (i): void => {
+	actualIndex.value = i
+	isOpenLang.value = false
 }
 
 const langsData = ref<Langs[]>([
 	{
 		img: poland,
 		country: 'Polski',
+		lang: 'pl',
 	},
 	{
 		img: usa,
 		country: 'English',
+		lang: 'en',
 	},
 	{
 		img: japan,
 		country: '日本語',
+		lang: 'ja',
 	},
 ])
 </script>
@@ -63,5 +90,15 @@ const langsData = ref<Langs[]>([
 
 .filt {
 	filter: invert(29%) sepia(53%) saturate(1468%) hue-rotate(118deg) brightness(93%) contrast(89%);
+}
+
+.v-enter-active,
+.v-leave-active {
+	transition: opacity 0.15s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+	opacity: 0;
 }
 </style>
