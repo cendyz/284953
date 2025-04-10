@@ -1,21 +1,22 @@
 <template>
 	<nav
+		ref="navRef"
 		class="p-[2.4rem] bg-primary-blue text-white flex justify-between items-center niceShadow sm:px-[3rem] md:px-[4rem] lg:hidden">
 		<img :src="logo" alt="logo cards" class="w-[4rem]" />
 		<div class="flex items-center gap-x-[1rem]">
 			<img :src="langsData[actualIndex].img" alt="flag" />
 			<p class="uppercase font-w700">{{ langsData[actualIndex].lang }}</p>
-			<button type="button" aria-label="change language" @click="isOpenLang = !isOpenLang">
+			<button type="button" aria-label="change language" @click="store.isOpenLang = !store.isOpenLang">
 				<img :src="arrow" alt="arrow down" class="w-[3.5rem] invert" />
 			</button>
 		</div>
 		<Transition>
 			<div
-				v-if="isOpenLang"
+				v-if="store.isOpenLang"
 				class="absolute bg-white w-[calc(100%-4.8rem)] left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] p-[2.4rem] rounded-lg text-black z-[100] max-w-[40rem]">
 				<div class="flex items-center justify-between mb-[1rem]">
 					<p class="text-[2rem]">Wybierz język mWallet</p>
-					<button type="button" aria-label="close change language options" @click="isOpenLang = false">
+					<button type="button" aria-label="close change language options" @click="store.isOpenLang = false">
 						<img :src="x" alt="x icon" />
 					</button>
 				</div>
@@ -37,11 +38,11 @@
 				</div>
 			</div>
 		</Transition>
-		<div v-if="isOpenLang" class="absolute top-0 left-0 w-full h-full bg-black/10 z-[50]"></div>
 	</nav>
 </template>
 
 <script setup lang="ts">
+import useFinanceStore from '~/store/financeStore'
 import logo from 'assets/images/atm-card.png'
 import arrow from 'assets/images/arrow.svg'
 import poland from 'assets/images/poland.svg'
@@ -56,12 +57,15 @@ interface Langs {
 	lang: string
 }
 
-const actualIndex = ref<number>(0)
-const isOpenLang = ref<boolean>(false)
+const store = useFinanceStore()
 
-const changeLanguage = (i): void => {
+const navRef = ref<HTMLElement | null>(null)
+
+const actualIndex = ref<number>(0) 
+
+const changeLanguage = (i: number): void => {
 	actualIndex.value = i
-	isOpenLang.value = false
+	store.isOpenLang = false
 }
 
 const langsData = ref<Langs[]>([
@@ -81,6 +85,23 @@ const langsData = ref<Langs[]>([
 		lang: 'ja',
 	},
 ])
+
+const handleClickOutside = (e: Event): void => {
+	if (navRef.value && !navRef.value.contains(e.target as HTMLElement)) {
+		store.isOpenLang = false
+	}
+}
+
+watch(
+	() => store.isOpenLang,
+	newValue => {
+		if (newValue) {
+			document.addEventListener('click', handleClickOutside)
+		} else {
+			document.removeEventListener('click', handleClickOutside)
+		}
+	}
+)
 </script>
 
 <style scoped lang="scss">
