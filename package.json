@@ -13,6 +13,7 @@
     "@formkit/auto-animate": "^0.8.2",
     "@nuxt/icon": "^1.11.0",
     "@nuxt/image": "^1.10.0",
+    "@nuxtjs/i18n": "^9.5.3",
     "@nuxtjs/tailwindcss": "^6.13.2",
     "@pinia/nuxt": "^0.10.1",
     "@vueuse/nuxt": "^13.0.0",

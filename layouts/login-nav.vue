@@ -15,7 +15,7 @@
 				v-if="store.isOpenLang"
 				class="absolute bg-white w-[calc(100%-4.8rem)] left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] p-[2.4rem] rounded-lg text-black z-[100] max-w-[40rem]">
 				<div class="flex items-center justify-between mb-[1rem]">
-					<p class="text-[2rem]">Wybierz język mWallet</p>
+					<p class="text-[2rem]">{{ $t('choose_language') }}</p>
 					<button type="button" aria-label="close change language options" @click="store.isOpenLang = false">
 						<img :src="x" alt="x icon" />
 					</button>
@@ -38,6 +38,7 @@
 				</div>
 			</div>
 		</Transition>
+		<!-- <p>{{ locale.name }}</p> -->
 	</nav>
 </template>
 
@@ -51,6 +52,8 @@ import usa from 'assets/images/usa.svg'
 import success from 'assets/images/success.svg'
 import x from 'assets/images/x.svg'
 
+const { t, locale, setLocale } = useI18n()
+
 interface Langs {
 	img: string
 	country: string
@@ -61,11 +64,12 @@ const store = useFinanceStore()
 
 const navRef = ref<HTMLElement | null>(null)
 
-const actualIndex = ref<number>(0) 
+const actualIndex = ref<number>(0)
 
 const changeLanguage = (i: number): void => {
 	actualIndex.value = i
 	store.isOpenLang = false
+	setLocale(langsData.value[i].lang as 'pl' | 'ja' | 'en')
 }
 
 const langsData = ref<Langs[]>([

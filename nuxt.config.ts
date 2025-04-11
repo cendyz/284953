@@ -1,12 +1,19 @@
 export default defineNuxtConfig({
 	compatibilityDate: '2024-11-01',
 	devtools: { enabled: true },
-	modules: ['@nuxtjs/tailwindcss', '@nuxt/icon', '@nuxt/image', '@vueuse/nuxt'],
+	modules: ['@nuxtjs/tailwindcss', '@nuxt/icon', '@nuxt/image', '@vueuse/nuxt', '@nuxtjs/i18n'],
+	i18n: {
+		defaultLocale: 'pl',
+		locales: [
+			{ code: 'pl', name: 'Polski', file: 'pl.json' },
+			{ code: 'en', name: 'English', file: 'en.json' },
+			{ code: 'ja', name: '日本語', file: 'ja.json' },
+		],
+		lazy: true,
+		langDir: 'locales/',
+	},
 	app: {
 		head: {
-			htmlAttrs: {
-				lang: 'pl',
-			},
 			title: 'mWallet',
 			link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.png?v2' }],
 			meta: [
