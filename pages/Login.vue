@@ -1,39 +1,46 @@
 <template>
-	<main class="mx-[2.4rem]">
-		<form class="bg-white rounded-xl p-[2rem] mx-auto mt-[6rem] max-w-[50rem] shadow-lg" @submit.prevent="">
-			<p class="text-[3.2rem] font-w700 mb-[3.2rem]">{{ $t('login') }}</p>
-			<label for="email" :class="labelStyles">Email</label>
-			<input type="email" id="email" :class="inputStyles" class="mb-[.3rem]" v-model="loginData.email" />
-			<p class="text-[1.1rem] italic" v-show="errorEmail">wrong email</p>
-			<label for="password" :class="labelStyles">Password</label>
-			<div
-				:class="[inputStyles, isShowedPasswordIcon ? 'outlineParrent' : '']"
-				class="focusParrent flex items-center border-[2px] mb-[.3rem]"
-				@focusin="isShowedPasswordIcon = true"
-				@focusout="isShowedPasswordIcon = false">
-				<input
-					:type="isShowedPasswordWords ? 'text' : 'password'"
-					id="password"
-					class="w-full focusInput outline-none"
-					v-model="loginData.pass" />
-				<button type="button" @click="isShowedPasswordWords = !isShowedPasswordWords">
-					<img
-						:src="isShowedPasswordWords ? openedEye : closedEye"
-						alt="hided password "
-						class="w-[2rem]"
-						v-show="loginData.pass.length !== 0" />
+	<main
+		class="mx-[2.4rem] lg:flex lg:items-center lg:justify-center max-h-full lg:gap-x-[7rem] lg:m-[0rem] xl:gap-x-[15rem] 2xl:gap-x-[25rem] lg:h-[100vh]">
+		<LoginHeader />
+		<section>
+			<form
+				class="bg-white rounded-xl p-[2rem] mx-auto mt-[6rem] max-w-[50rem] shadow-lg lg:w-[40rem] lg:m-0 xl:w-[50rem]"
+				@submit.prevent="">
+				<p class="text-[3.2rem] font-w700 mb-[3.2rem]">{{ $t('login') }}</p>
+				<label for="email" :class="labelStyles">Email</label>
+				<input type="email" id="email" :class="inputStyles" class="mb-[.3rem]" v-model="loginData.email" />
+				<p class="text-[1.1rem] italic" v-show="errorEmail">wrong email</p>
+				<label for="password" :class="labelStyles">Password</label>
+				<div
+					:class="[inputStyles, isShowedPasswordIcon ? 'outlineParrent' : '']"
+					class="focusParrent flex items-center border-[2px] mb-[.3rem]"
+					@focusin="isShowedPasswordIcon = true"
+					@focusout="isShowedPasswordIcon = false">
+					<input
+						:type="isShowedPasswordWords ? 'text' : 'password'"
+						id="password"
+						class="w-full focusInput outline-none"
+						v-model="loginData.pass" />
+					<button type="button" @click="isShowedPasswordWords = !isShowedPasswordWords">
+						<img
+							:src="isShowedPasswordWords ? openedEye : closedEye"
+							alt="hided password "
+							class="w-[2rem]"
+							v-show="loginData.pass.length !== 0" />
+					</button>
+				</div>
+				<p class="text-[1.1rem] italic text-[#cd4432]" v-show="errorPass">wrong email</p>
+				<button
+					type="submit"
+					class="p-[.5rem] font-w700 bg-[#1A2E45] text-white w-full py-[1.4rem] rounded-xl mt-[3.5rem] mb-[3.2rem]">
+					{{ $t('login') }}
 				</button>
-			</div>
-			<p class="text-[1.1rem] italic text-[#cd4432]" v-show="errorPass">wrong email</p>
-			<button
-				type="submit"
-				class="p-[.5rem] font-w700 bg-[#1A2E45] text-white w-full py-[1.4rem] rounded-xl mt-[3.5rem] mb-[3.2rem]">
-				{{ $t('login') }}
-			</button>
-			<p class="text-[#696868] text-[1.4rem] text-center">
-				Need to create an account? <NuxtLink to="/signUp" class="underline text-[#111827] font-w700">Sign Up</NuxtLink>
-			</p>
-		</form>
+				<p class="text-[#696868] text-[1.4rem] text-center">
+					Need to create an account?
+					<NuxtLink to="/signUp" class="underline text-[#111827] font-w700">Sign Up</NuxtLink>
+				</p>
+			</form>
+		</section>
 		<div v-if="store.isOpenLang" class="absolute top-0 left-0 w-full h-full bg-black/10 z-[50]"></div>
 	</main>
 </template>
@@ -42,6 +49,8 @@
 import useFinanceStore from '~/store/financeStore'
 import openedEye from 'assets/images/opened_eye.svg'
 import closedEye from 'assets/images/closed_eye.svg'
+import loginPhoto from 'assets/images/login_signup.svg'
+import logo from 'assets/images/atm-card.png'
 const { t } = useI18n()
 
 definePageMeta({

@@ -1,10 +1,10 @@
 <template>
 	<nav
 		ref="navRef"
-		class="p-[2.4rem] bg-primary-blue text-white flex justify-between items-center niceShadow sm:px-[3rem] md:px-[4rem] lg:hidden">
+		class="p-[2.4rem] w-full bg-primary-blue text-white flex justify-between items-center niceShadow sm:px-[3rem] md:px-[4rem] lg:hidden">
 		<img :src="logo" alt="logo cards" class="w-[4rem]" />
 		<div class="flex items-center gap-x-[1rem]">
-			<img :src="langsData[actualIndex].img" alt="flag" />
+			<img :src="langsData[actualIndex].img" alt="flag" class="w-[2.2rem]" />
 			<p class="uppercase font-w700">{{ langsData[actualIndex].lang }}</p>
 			<button type="button" aria-label="change language" @click="store.isOpenLang = !store.isOpenLang">
 				<img :src="arrow" alt="arrow down" class="w-[3.5rem] invert" />

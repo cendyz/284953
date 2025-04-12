@@ -7,11 +7,6 @@ import useFinanceStore from '~/store/financeStore'
 
 const store = useFinanceStore()
 
-useHead({
-	htmlAttrs: {
-		lang: store.lang,
-	},
-})
 </script>
 
 <style lang="scss">
