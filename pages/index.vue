@@ -1,5 +1,5 @@
 <template>
-	<h1>ww</h1>
+	<header></header>
 </template>
 
 <script setup lang="ts">

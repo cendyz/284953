@@ -2,7 +2,9 @@
 	<nav
 		ref="navRef"
 		class="p-[2.4rem] w-full bg-primary-blue text-white flex justify-between items-center niceShadow sm:px-[3rem] md:px-[4rem] lg:hidden">
-		<img :src="logo" alt="logo cards" class="w-[4rem]" />
+		<button type="button">
+			<img :src="logo" alt="logo cards" class="w-[3rem]" />
+		</button>
 		<div class="flex items-center gap-x-[1rem]">
 			<img :src="langsData[actualIndex].img" alt="flag" class="w-[2.2rem]" />
 			<p class="uppercase font-w700">{{ langsData[actualIndex].lang }}</p>
